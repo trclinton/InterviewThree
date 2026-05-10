@@ -5,13 +5,13 @@ pipeline {
     parameters {
 
         choice(
-            name: 'BROWSER',
+            name: 'browser',
             choices: ['chrome', 'firefox'],
             description: 'Browser'
         )
 
         booleanParam(
-            name: 'REMOTE',
+            name: 'isRemote',
             defaultValue: true,
             description: 'Remote Execution'
         )
@@ -64,8 +64,8 @@ pipeline {
 
                 sh """
                     gradle clean test \
-                    -Dbrowser=${params.BROWSER} \
-                    -DisRemote=${params.REMOTE}
+                    -Dbrowser=${params.browser} \
+                    -DisRemote=${params.isRemote}
                 """
             }
         }
