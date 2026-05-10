@@ -2,10 +2,24 @@ pipeline {
 
     agent any
 
+    parameters {
+
+        choice(
+            name: 'BROWSER',
+            choices: ['chrome', 'firefox'],
+            description: 'Browser'
+        )
+
+        booleanParam(
+            name: 'REMOTE',
+            defaultValue: true,
+            description: 'Remote Execution'
+        )
+    }
+
     environment {
 
-        BROWSER = "firefox"
-        REMOTE = "true"
+        PATH = "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
     }
 
     stages {
@@ -36,15 +50,23 @@ pipeline {
             }
         }
 
+        stage('Wait For Grid') {
+
+            steps {
+
+                sh 'sleep 15'
+            }
+        }
+
         stage('Run Tests') {
 
             steps {
 
-                sh '''
+                sh """
                     gradle clean test \
-                    -Dbrowser=${BROWSER} \
-                    -DisRemote=${REMOTE}
-                '''
+                    -Dbrowser=${params.BROWSER} \
+                    -DisRemote=${params.REMOTE}
+                """
             }
         }
 
@@ -68,10 +90,12 @@ pipeline {
 
         always {
 
-            sh 'docker compose down'
+            sh '/usr/local/bin/docker compose down'
 
-            archiveArtifacts artifacts: 'screenshots/*.png',
+            archiveArtifacts(
+                    artifacts: 'screenshots/*.png',
                     fingerprint: true
+            )
         }
     }
 }
