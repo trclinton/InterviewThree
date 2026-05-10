@@ -19,21 +19,13 @@ public final class ExtentManager {
                                     + "/reports/ExtentReport.html"
                     );
 
-            sparkReporter.config().setReportName(
-                    "Automation Test Report");
-
-            sparkReporter.config().setDocumentTitle(
-                    "Execution Results");
+            sparkReporter.config().setReportName("Automation Test Report");
+            sparkReporter.config().setDocumentTitle("Execution Results");
 
             extentReports = new ExtentReports();
-
             extentReports.attachReporter(sparkReporter);
-
-            extentReports.setSystemInfo(
-                    "Tester", "Reynold");
-
-            extentReports.setSystemInfo(
-                    "Environment", "QA");
+            extentReports.setSystemInfo("Tester", "Reynold");
+            extentReports.setSystemInfo("Environment", "QA");
         }
 
         return extentReports;

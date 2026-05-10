@@ -10,11 +10,16 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:6.0.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.28.1'
+    implementation group: 'org.testng', name: 'testng', version: '7.10.2'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.18.0'
+    implementation 'com.aventstack:extentreports:5.1.1'
 }
 
 test {
-    useJUnitPlatform()
+    useTestNG(){
+        suites 'src/test/testng.xml'
+    }
+    systemProperty "browser", System.getProperty("browser")
+    systemProperty "isRemote", System.getProperty("isRemote")
 }
