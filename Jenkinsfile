@@ -46,7 +46,7 @@ pipeline {
 
             steps {
 
-                sh '/usr/local/bin/docker compose up -d --scale firefox=2'
+                sh '/usr/local/bin/docker compose up -d --scale firefox=2 --scale chrome=2'
             }
         }
 
