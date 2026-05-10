@@ -18,11 +18,21 @@ pipeline {
             }
         }
 
+        stage('Verify Docker') {
+
+            steps {
+
+                sh 'which docker'
+                sh 'docker --version'
+                sh 'docker ps'
+            }
+        }
+
         stage('Start Selenium Grid') {
 
             steps {
 
-                sh 'docker compose up -d --scale firefox=2'
+                sh '/usr/local/bin/docker compose up -d --scale firefox=2'
             }
         }
 
