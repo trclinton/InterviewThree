@@ -54,7 +54,7 @@ pipeline {
 
             steps {
 
-                sh 'sleep 15'
+                sh 'sleep 10'
             }
         }
 
@@ -93,8 +93,9 @@ pipeline {
             sh '/usr/local/bin/docker compose down'
 
             archiveArtifacts(
-                    artifacts: 'screenshots/*.png',
-                    fingerprint: true
+                artifacts: 'screenshots/*.png',
+                fingerprint: true,
+                allowEmptyArchive: true
             )
         }
     }
